@@ -1,2 +1,5 @@
-# Ignore all dependencies
+# MacOS stuff
+.DS_Store
+
+# Ignore all dependencies for node
 node_modules/

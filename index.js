@@ -1,10 +1,10 @@
 
 // environmentVars reads these values from local .env file 
 // and exports them
-import { neo4j_pwd } from './config/environment/environmentVars.js';
-import { neo4j_server } from './config/environment/environmentVars.js';
-import { neo4j_user } from './config/environment/environmentVars.js';
+import  envs from './config/environment/environmentVars.js';
 
+
+// Items needed from modules
 import { Neo4jGraphQL } from "@neo4j/graphql";
 import { ApolloServer } from "apollo-server";
 import  neo4j  from "neo4j-driver";
@@ -14,10 +14,9 @@ import  neo4j  from "neo4j-driver";
 // 'typeDefs'
 import typeDefs from './schema.js';
 
-
 const driver = neo4j.driver(
-    neo4j_server,
-    neo4j.auth.basic(neo4j_user, neo4j_pwd)
+    envs.NEO4J_SERVER,
+    neo4j.auth.basic(envs.NEO4J_USER, envs.NEO4J_PWD)
 );
 
 const neoSchema = new Neo4jGraphQL({ typeDefs, driver });
@@ -27,8 +26,9 @@ neoSchema.getSchema().then((schema) => {
       schema,
   });
 
-  server.listen().then(({ url }) => {
-      console.log(`🚀 Server ready at ${url}`);
+  server
+    .listen({ port : envs.GRAPHQL_PORT, host : envs.GRAPHQL_IP })
+    .then(({ url }) => { console.log(`🚀 Server ready at ${url}`);
   });
 })
 

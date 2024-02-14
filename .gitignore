@@ -1,0 +1,10 @@
+# MacOS stuff
+.DS_Store/
+.DS_Store
+
+
+# Ignore all dependencies for node
+node_modules/
+
+# Ignore our env file that could have confidential information in 
+.env
